@@ -4,30 +4,72 @@ using UnityEngine;
 
 namespace Character
 {
+    public enum CharacterState { away, idle, coming, talking, leaving }
+
     public class Character : MonoBehaviour
     {
-        public static Dictionary<string, Character> characterDict;
-        public static Dictionary<string, List<Character>> characterGroupDict;
-
+        public CharacterState state;
         public string ID;
-        public List <string> groupIDs;
-        public int happiness;
+        public List<string> groupIDs;
+        private int happiness;
 
-        // Use this for initialization
         void Start()
         {
-
+            state = CharacterState.away;
         }
 
-        // Update is called once per frame
         void Update()
         {
+            switch (state)
+            {
+                case CharacterState.away:
+                    break;
+                case CharacterState.idle:
+                    break;
+                case CharacterState.coming:
+                    Come();
+                    break;
+                case CharacterState.leaving:
+                    Retreat();
+                    break;
+                case CharacterState.talking:
+                    Talk();
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        public void arrive()
+        {
+            if (state == CharacterState.away)
+            {
+                Debug.Log(ID + " arriving");
+            }
+            else
+            {
+                Debug.LogError(ID + " tries to arrive but is already here!");
+            }
         }
 
         public void changeHappiness(int value)
         {
             happiness += value;
+        }
+
+        private void Come()
+        {
+
+        }
+
+        private void Retreat()
+        {
+
+        }
+
+        private void Talk()
+        {
+
         }
     }
 }

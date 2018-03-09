@@ -24,6 +24,16 @@ namespace Request
             No = new Answer(attributes[SpeechAttribute.OnNo]);
         }
 
+        public override string AnswerYes()
+        {
+            return Yes.Execute();
+        }
+
+        public override string AnswerNo()
+        {
+            return No.Execute();
+        }
+
         protected override string[] ParseAttributes(string attributeString)
         {
             string[] decisionParts = base.ParseAttributes(attributeString);

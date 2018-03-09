@@ -5,19 +5,21 @@ using UnityEngine.UI;
 
 namespace Request
 {
-    public enum RequestAttribute { ID, Character, SelectionChance };
+    public enum RequestAttribute { ID, Character, SelectionChance, ChanceLocked };
 
     public class Request
     {
         private Room.Speechbubble speechBubble;
         public Dictionary<RequestAttribute, string> attributes { get; private set; }
         private Dictionary<string, Speech> speechList;
+        private string currentlyActiveSpeechID;
         private bool initialized = false;
 
         public Request(Room.Speechbubble speechBubble)
         {
             this.speechBubble = speechBubble;
-
+            attributes = new Dictionary<RequestAttribute, string>();
+            attributes.Add(RequestAttribute.ChanceLocked, "f");
             speechList = new Dictionary<string, Speech>();
         }
 
@@ -37,6 +39,7 @@ namespace Request
             Speech startingStatement;
             if (speechList.TryGetValue("_START_", out startingStatement))
             {
+                currentlyActiveSpeechID = startingStatement.attributes[SpeechAttribute.ID];
                 startingStatement.Show();
             }
             else
@@ -45,6 +48,34 @@ namespace Request
             }
 
             return 0;
+        }
+
+        public bool Next()
+        {
+            currentlyActiveSpeechID = speechList[currentlyActiveSpeechID].Next();
+            return ShowNextSpeech();
+        }
+
+        public bool AnswerYes()
+        {
+            currentlyActiveSpeechID = speechList[currentlyActiveSpeechID].AnswerYes();
+            return ShowNextSpeech();
+        }
+
+        public bool AnswerNo()
+        {
+            currentlyActiveSpeechID = speechList[currentlyActiveSpeechID].AnswerNo();
+            return ShowNextSpeech();
+        }
+
+        private bool ShowNextSpeech()
+        {
+            if (currentlyActiveSpeechID == "_END_")
+            {
+                return false;
+            }
+            speechList[currentlyActiveSpeechID].Show();
+            return true;
         }
 
         private void ParseAttributes(string requestString)

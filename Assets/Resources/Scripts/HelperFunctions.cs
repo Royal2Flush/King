@@ -19,7 +19,12 @@ static class HelperFuctions
         {
             end = source.Length + end;
         }
-        int len = end - start;
+        int len = end - start + 1;
+        
+        if (len<0)
+        {
+            len = 0;
+        }
 
         T[] res = new T[len];
         for (int i = 0; i < len; i++)

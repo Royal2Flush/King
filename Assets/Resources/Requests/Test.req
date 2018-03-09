@@ -1,0 +1,3 @@
+_START_|Hans|0|S^_START_^Hi, there, I'm a test alien!^FIRSTQ|D^FIRSTQ^Do you like chocolate?^Next:HAPPY^Next:SAD|S^HAPPY^Yay, me too!^_END_|S^SAD^You're weird...^_END_
+LOOPA|Hans|5|S^_START_^Loop A (1/3)^_END_
+LOOPB|Hans|10|S^_START_^Loop B (2/3)^_END_

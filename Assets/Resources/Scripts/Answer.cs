@@ -16,19 +16,18 @@ namespace Request
 
         public Answer(string onChoice)
         {
-            commands = onChoice.Split('|');
+            commands = onChoice.Split('#');
         }
 
-        public int Execute()
+        public string Execute()
         {
-            int nextDecision = 0;
+            string nextSpeechID = string.Empty;
 
             foreach (string command in commands)
             {
-                string[] commandStructure = command.Split('#');
+                string[] commandStructure = command.Split(':');
                 string c = commandStructure[0];
-                string[] a = new string[commandStructure.Length - 1];
-                commandStructure.CopyTo(a, 1);
+                string[] a = HelperFuctions.SliceArray<string>(commandStructure, 1, -1);
 
                 switch (c)
                 {
@@ -57,7 +56,7 @@ namespace Request
                     case "RemoveCrew":
                         break;
                     case "Next":
-                        nextDecision = ParseNextDecision(a);
+                        nextSpeechID = ParseNextDecision(a);
                         break;
                     case "Other":
                         break;
@@ -67,7 +66,7 @@ namespace Request
                 }
             }
 
-            return nextDecision;
+            return nextSpeechID;
         }
 
         private void AddEnergy(string[] a)
@@ -121,7 +120,7 @@ namespace Request
             }
             try
             {
-                Character.Character.characterDict[a[0]].changeHappiness(int.Parse(a[1]));
+                //Character.Character.characterDict[a[0]].changeHappiness(int.Parse(a[1]));
             }
             catch (System.FormatException)
             {
@@ -146,9 +145,9 @@ namespace Request
             }
             try
             {
-                foreach(Character.Character c in Character.Character.characterGroupDict[a[0]])
+                //foreach(Character.Character c in Character.Character.characterGroupDict[a[0]])
                 {
-                    c.changeHappiness(int.Parse(a[1]));
+                    //c.changeHappiness(int.Parse(a[1]));
                 }
             }
             catch (System.FormatException)
@@ -163,25 +162,18 @@ namespace Request
             }
         }
 
-        private int ParseNextDecision(string[] a)
+        private string ParseNextDecision(string[] a)
         {
-            int r = 0;
+            string r = string.Empty;
 
             if (a.Length != 1)
             {
                 Debug.LogError("ParseNextDecision received " + a.Length.ToString() + " arguments but expects 1");
-                return 0;
+                return r;
             }
             else
             {
-                try
-                {
-                    r = int.Parse(a[0]);
-                }
-                catch (System.FormatException)
-                {
-                    Debug.LogError("ParseNextDecision argument is no Integer!");
-                }
+                r = a[0];
             }
             return r;
         }

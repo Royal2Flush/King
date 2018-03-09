@@ -13,6 +13,9 @@ namespace Room
 
         public Text requestText;
 
+        private bool nextTextQueued = false;
+        private string nextText;
+
         private const float minScale = 0.001f;
         private const float scaleTime = 10f;
         private Vector3 nativeScale;
@@ -31,15 +34,16 @@ namespace Room
                 requestText = gameObject.GetComponentInChildren<Text>();
             }
 
-            state = bubbleState.idle;
+            //state = bubbleState.idle;
             nativeScale = gameObject.transform.localScale;
             idleScale = new Vector3(nativeScale.x * minScale, nativeScale.y * minScale);
             gameObject.transform.localScale = idleScale;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         void Update()
         {
+            //Debug.Log("Hello");
             switch (state)
             {
                 case bubbleState.idle:
@@ -65,6 +69,17 @@ namespace Room
                 requestText.text = request;
                 state = bubbleState.appearing;
                 gameObject.SetActive(true);
+                Debug.Log("Speechbubble coming up with text " + request);
+            }
+            else if (state == bubbleState.disappearing && !nextTextQueued)
+            {
+                nextTextQueued = true;
+                nextText = request;
+            }
+            else if (state == bubbleState.there)
+            {
+                Hide();
+                Show(request);
             }
         }
 
@@ -73,6 +88,18 @@ namespace Room
             if (state == bubbleState.there)
             {
                 state = bubbleState.disappearing;
+            }
+        }
+
+        public bool IsReady()
+        {
+            if (state == bubbleState.there)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -100,6 +127,12 @@ namespace Room
                 gameObject.transform.localScale = HelperFuctions.ScaleVector(nativeScale, minScale);
                 state = bubbleState.idle;
                 gameObject.SetActive(false);
+
+                if (nextTextQueued)
+                {
+                    Show(nextText);
+                    nextTextQueued = false;
+                }
             }
         }
     }

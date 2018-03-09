@@ -16,18 +16,23 @@ namespace Request
             base.Initialize(attributeString);
         }
 
+        public override string Next()
+        {
+            return attributes[SpeechAttribute.LinksToID];
+        }
+
         protected override string[] ParseAttributes(string attributeString)
         {
             string[] decisionParts = base.ParseAttributes(attributeString);
 
             if (decisionParts.Length < 1)
             {
-                Debug.LogError("Speech initialized with " + decisionParts.Length.ToString() + ", but expected at least 1!");
+                Debug.LogError("Statement initialized with " + decisionParts.Length.ToString() + " addional arguments, but expected at least 1!");
             }
 
             attributes.Add(SpeechAttribute.LinksToID, decisionParts[0]);
 
-            string[] unusedParts = HelperFuctions.SliceArray<string>(decisionParts, 2, -1);
+            string[] unusedParts = HelperFuctions.SliceArray<string>(decisionParts, 1, -1);
             return unusedParts;
         }
     }

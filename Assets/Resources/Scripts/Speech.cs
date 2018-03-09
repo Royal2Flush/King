@@ -25,6 +25,21 @@ namespace Request
             initialized = true;
         }
 
+        public virtual string Next()
+        {
+            return attributes[SpeechAttribute.ID];
+        }
+
+        public virtual string AnswerYes()
+        {
+            return Next();
+        }
+
+        public virtual string AnswerNo()
+        {
+            return Next();
+        }
+
         public int Show()
         {
             if (!initialized)
@@ -32,6 +47,10 @@ namespace Request
                 Debug.LogError(attributes[SpeechAttribute.ID] + " not initialized before used!");
                 return 1;
             }
+
+            Debug.Log("Loading Speech with ID " + attributes[SpeechAttribute.ID]);
+
+            speechBubble.Show(attributes[SpeechAttribute.BubbleText]);
 
             return 0;
         }

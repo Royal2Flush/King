@@ -6,25 +6,30 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
+        public Room.Speechbubble speechbubble;
 
-        public Room.Speechbubble bubble;
+        private Request.RequestManager rm;
 
-        // Use this for initialization
         void Start()
         {
-
+            rm = new Request.RequestManager(speechbubble);
+            rm.LoadRequests();
+            rm.ShowStart();
         }
 
-        // Update is called once per frame
         void Update()
         {
+            if(Input.GetKeyDown("up"))
+            {
+                rm.handleNext();
+            }
             if(Input.GetKeyDown("right"))
             {
-                bubble.Show("Hello World");
+                rm.handleYes();
             }
             if (Input.GetKeyDown("left"))
             {
-                bubble.Hide();
+                rm.handleNo();
             }
         }
 

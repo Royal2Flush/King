@@ -53,13 +53,22 @@
   <ItemGroup>
      <Compile Include="Assets\Resources\Scripts\Answer.cs" />
      <Compile Include="Assets\Resources\Scripts\Character.cs" />
+     <Compile Include="Assets\Resources\Scripts\CharacterManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Decision.cs" />
+     <Compile Include="Assets\Resources\Scripts\Door.cs" />
      <Compile Include="Assets\Resources\Scripts\GameManager.cs" />
      <Compile Include="Assets\Resources\Scripts\HappinessChange.cs" />
      <Compile Include="Assets\Resources\Scripts\HelperFunctions.cs" />
      <Compile Include="Assets\Resources\Scripts\Request.cs" />
-     <Compile Include="Assets\Resources\Scripts\RequestImportancyChange.cs" />
+     <Compile Include="Assets\Resources\Scripts\RequestManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\Speech.cs" />
      <Compile Include="Assets\Resources\Scripts\Speechbubble.cs" />
+     <Compile Include="Assets\Resources\Scripts\Statement.cs" />
+     <Compile Include="Assets\Scripts\alienBehaviour.cs" />
+     <Compile Include="Assets\Scripts\bubbleBehaviour.cs" />
+     <Compile Include="Assets\Scripts\doorBehaviour.cs" />
+     <Compile Include="Assets\Scripts\main.cs" />
+     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity2017/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -81,6 +90,10 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity2017/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{E387C826-5C6B-21BA-7E44-1D4EB8846930}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
